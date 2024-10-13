@@ -22,7 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 export class AddPlayerComponent {
   name: string = '';
 
+  constructor(public dialogRef: MatDialogRef<AddPlayerComponent>) {}
+  
   onNoClick(): void {
-    console.log('No click');
+    this.dialogRef.close();
   }
 }

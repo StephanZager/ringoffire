@@ -16,6 +16,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { AddPlayerComponent } from '../add-player/add-player.component';
+import { GameInfoComponent } from '../game-info/game-info.component';
 
 @Component({
   selector: 'app-game',
@@ -27,7 +28,7 @@ import { AddPlayerComponent } from '../add-player/add-player.component';
     MatIconModule,
     MatDialogModule,
     FormsModule,
-
+    GameInfoComponent
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
@@ -57,6 +58,8 @@ export class GameComponent {
         this.currentCard = card;
         this.pickCardAnimation = true;
         console.log('Card taken', card);
+        this.game.currentPlayer++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 
       } else {
         console.log('No more cards in the stack');
@@ -72,8 +75,10 @@ export class GameComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe((name:string) => {
-      this.game.players.push(name);
+    dialogRef.afterClosed().subscribe((name: string) => {
+      if (name && name.length > 0) {
+        this.game.players.push(name);
+      }
     });
 
 
